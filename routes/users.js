@@ -33,6 +33,15 @@ router.post('/new', function (req, res, next) {
                 })
                 .then((result) => {
                     const objectId = result.insertedId.toHexString();
+
+                    req.app.locals.db.collection('userData').insertOne({
+                        userId: objectId,
+                        userName: req.body.userName,
+                        country: 'sweden',
+                        flag: 'sweden',
+                        flagDays: [],
+                    });
+
                     const cookieId = CryptoJS.AES.encrypt(
                         objectId,
                         process.env.SALT_KEY
