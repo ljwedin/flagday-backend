@@ -60,6 +60,12 @@ router.post('/login', function (req, res, next) {
                     process.env.SALT_KEY
                 ).toString(CryptoJS.enc.Utf8)
             ) {
+                const objectId = result._id.toHexString();
+                const cookieId = CryptoJS.AES.encrypt(
+                    objectId,
+                    process.env.SALT_KEY
+                );
+                res.cookie('id', cookieId.toString());
                 res.send(true);
             } else {
                 res.send(false);

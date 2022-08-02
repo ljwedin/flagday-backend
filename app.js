@@ -20,7 +20,7 @@ MongoClient.connect(process.env.MONGO_URI, {
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-const userDataRouter = require('./routes/users');
+const userDataRouter = require('./routes/userData');
 
 var app = express();
 
