@@ -1,0 +1,18 @@
+var express = require('express');
+var router = express.Router();
+const CryptoJS = require('crypto-js');
+const { ObjectId } = require('mongodb');
+
+router.get('/', function (req, res, next) {
+    const cookieId = CryptoJS.AES.decrypt(
+        req.cookies.id,
+        process.env.SALT_KEY
+    ).toString(CryptoJS.enc.Utf8);
+
+    req.app.locals.db
+        .collection('userData')
+        .findOne({ userId: cookieId })
+        .then((result) => res.send(result));
+});
+
+module.exports = router;
