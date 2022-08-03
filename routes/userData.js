@@ -63,4 +63,21 @@ router.post('/addFlagDay', function (req, res, next) {
         });
 });
 
+router.post('/removeFlagDay', function (req, res, next) {
+    const cookieId = CryptoJS.AES.decrypt(
+        req.cookies.id,
+        process.env.SALT_KEY
+    ).toString(CryptoJS.enc.Utf8);
+
+    req.app.locals.db
+        .collection('userData')
+        .updateOne(
+            { userId: cookieId },
+            { $pull: { flagDays: { id: req.body.id } } }
+        )
+        .then((results) => {
+            res.send(true);
+        });
+});
+
 module.exports = router;
