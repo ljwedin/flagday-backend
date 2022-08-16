@@ -42,11 +42,12 @@ router.post('/updateFlag', function (req, res, next) {
         .then((result) => res.send(true));
 });
 
+// Hard coded on front end in env file before fixing authentication
 router.post('/addFlagDay', function (req, res, next) {
-    const cookieId = CryptoJS.AES.decrypt(
-        req.cookies.id,
-        process.env.SALT_KEY
-    ).toString(CryptoJS.enc.Utf8);
+    // const cookieId = CryptoJS.AES.decrypt(
+    //     req.cookies.id,
+    //     process.env.SALT_KEY
+    // ).toString(CryptoJS.enc.Utf8);
 
     const flagDay = {
         month: req.body.month,
@@ -57,7 +58,10 @@ router.post('/addFlagDay', function (req, res, next) {
 
     req.app.locals.db
         .collection('userData')
-        .updateOne({ userId: cookieId }, { $push: { flagDays: flagDay } })
+        .updateOne(
+            { userId: req.body.userId },
+            { $push: { flagDays: flagDay } }
+        )
         .then((results) => {
             res.send(true);
         });
