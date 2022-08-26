@@ -3,7 +3,7 @@ var router = express.Router();
 const CryptoJS = require('crypto-js');
 const { ObjectId } = require('mongodb');
 
-router.get('/', function (req, res, next) {
+router.post('/', function (req, res, next) {
     // const cookieId = CryptoJS.AES.decrypt(
     //     req.cookies.id,
     //     process.env.SALT_KEY
