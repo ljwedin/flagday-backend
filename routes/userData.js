@@ -4,14 +4,14 @@ const CryptoJS = require('crypto-js');
 const { ObjectId } = require('mongodb');
 
 router.get('/', function (req, res, next) {
-    const cookieId = CryptoJS.AES.decrypt(
-        req.cookies.id,
-        process.env.SALT_KEY
-    ).toString(CryptoJS.enc.Utf8);
+    // const cookieId = CryptoJS.AES.decrypt(
+    //     req.cookies.id,
+    //     process.env.SALT_KEY
+    // ).toString(CryptoJS.enc.Utf8);
 
     req.app.locals.db
         .collection('userData')
-        .findOne({ userId: cookieId })
+        .findOne({ userId: req.body.userId })
         .then((result) => res.send(result));
 });
 
